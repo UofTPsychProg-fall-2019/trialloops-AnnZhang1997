@@ -29,10 +29,34 @@ win = visual.Window(fullscr=True, allowGUI=False, color='white', unit='height')
 
 # make a list or a pd.DataFrame that contains trial-specific info (stimulus, etc)
 # e.g. stim = ['1.jpg','2.jpg','3.jpg']
+text_blue = visual.TextStim(win, text="blue", color="brown")
+col_blue = visual.TextStim(win, text="orange", color="blue")
+text_red = visual.TextStim(win, text="red", color="green")
+col_red = visual.TextStim(win, text="brown", color="red")
+text_yellow = visual.TextStim(win, text="yellow", color="orange")
+col_yellow = visual.TextStim(win, text="green", color="yellow")
 
+stim = [text_blue, col_blue, text_red, col_red, text_yellow, col_yellow]
+stim = pd.Dataframe(stim)
+stim = stim.sample(frac=1)
 
+response = []
+
+instructionText = visual.TextStim(win, text = "If the colour of the word \
+                                  that appears is a primary colour of the \
+                                  artist's colour wheel (Red-Yellow-Blue), \
+                                  press ‘y'. Otherwise, press 'n'",
+                                  color='black')
+instructionText.draw()
+win.flip()
+event.waitKeys()
 # make your loop
-for t in ... :
+for text in stim:
+    text.draw()
+    win.flip()
+    keys = event.waitKeys(maxWait = 2, keyList = ['y', 'n'])
+    response.append(keys)
+    
     
     # include your trial code in your loop but replace anything that should 
     # change on each trial with a variable that uses your iterater
